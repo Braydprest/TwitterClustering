@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><results>
+    <numOfClusters>7</numOfClusters>
+    <clusters>
+        <clusteredSentences>0003: I am confused that single words are skipped!</clusteredSentences>
+        <clusteredSentences>0017: this skips single words!</clusteredSentences>
+        <clusteredSentences>0018: why are you skipping single words?</clusteredSentences>
+        <clusteredSentences>0021: does skip sentences words!</clusteredSentences>
+        <clusterTopics>[word:2.78, skip:2.78, singl word:2.69, skip singl word:2.42]</clusterTopics>
+        <clusterScore>2.782049020660771</clusterScore>
+        <clusterSize>4</clusterSize>
+    </clusters>
+    <clusters>
+        <clusteredSentences>0011: Rain is missing?</clusteredSentences>
+        <clusteredSentences>0012: missing rain?</clusteredSentences>
+        <clusteredSentences>0022: more stuff about rain?</clusteredSentences>
+        <clusterTopics>[rain:2.78, miss:2.43]</clusterTopics>
+        <clusterScore>2.7793737132657634</clusterScore>
+        <clusterSize>3</clusterSize>
+    </clusters>
+    <clusters>
+        <clusteredSentences>0000: first tweet</clusteredSentences>
+        <clusteredSentences>0001: second tweet</clusteredSentences>
+        <clusteredSentences>0002: third tweet</clusteredSentences>
+        <clusteredSentences>0019: fourth tweet</clusteredSentences>
+        <clusteredSentences>0020: fifth tweet</clusteredSentences>
+        <clusteredSentences>0023: sixth tweet</clusteredSentences>
+        <clusteredSentences>0024: tweet number seven</clusteredSentences>
+        <clusterTopics>[tweet:2.68]</clusterTopics>
+        <clusterScore>2.6846154506381272</clusterScore>
+        <clusterSize>7</clusterSize>
+    </clusters>
+    <clusters>
+        <clusteredSentences>0005: testing out results</clusteredSentences>
+        <clusteredSentences>0006: starting the test</clusteredSentences>
+        <clusteredSentences>0007: did it pass the test?</clusteredSentences>
+        <clusterTopics>[test:2.59]</clusterTopics>
+        <clusterScore>2.5883843584601807</clusterScore>
+        <clusterSize>3</clusterSize>
+    </clusters>
+    <clusters>
+        <clusteredSentences>0008: not sure if this will work</clusteredSentences>
+        <clusteredSentences>0009: will it work?</clusteredSentences>
+        <clusteredSentences>0010: I sure hope it works</clusteredSentences>
+        <clusterTopics>[work:2.59]</clusterTopics>
+        <clusterScore>2.5883843584601807</clusterScore>
+        <clusterSize>3</clusterSize>
+    </clusters>
+    <clusters>
+        <clusteredSentences>0015: I'm ready for vacation!</clusteredSentences>
+        <clusteredSentences>0016: where would you go on vacation?</clusteredSentences>
+        <clusterTopics>[vacat:2.03]</clusterTopics>
+        <clusterScore>2.0343823511496613</clusterScore>
+        <clusterSize>2</clusterSize>
+    </clusters>
+    <clusters>
+        <clusteredSentences>0004:let's see what you can do</clusteredSentences>
+        <clusteredSentences>0013:rain is not missing as long as it is not alone</clusteredSentences>
+        <clusteredSentences>0014:the rainforest is pretty</clusteredSentences>
+        <clusterTopics>[sentences_with_no_cluster_membership]</clusterTopics>
+        <clusterScore>0</clusterScore>
+        <clusterSize>3</clusterSize>
+    </clusters>
+</results>
+
