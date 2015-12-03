@@ -3,7 +3,10 @@
  */
 package src;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -25,46 +28,93 @@ public class TwitterDataGrab {
 	 */
 	public static void main(String[] args) {
 		
-		/* Commented out to test the SentenceClustering
+		String[] cleanTweets = null;
+		HashMap<String, Integer> Tweets = new HashMap<String, Integer>();
+		
 		if (args.length < 1) {
             System.out.printf("\u001B[31m Usage \u001B[0m: java twitter4j.examples.search.SearchTweets [query]\n"
             		+ "For [query] more than one word use quotes");
             System.exit(-1);
         }
-        Twitter twitter = new TwitterFactory().getInstance();
-        //TODO:: figure out rate limit issues, possible with caching of some sort  
-        try {
-            Query query = new Query(args[0]);
-            QueryResult result; 
-            do {
-                result = twitter.search(query);
-                List<Status> tweets = result.getTweets();
-                for (Status tweet : tweets) {
-                    System.out.println("@" + tweet.getUser().getScreenName() + " - " + tweet.getText());
-                }
-            } while ((query = result.nextQuery()) != null);
-            System.exit(0);
-        } catch (TwitterException te) {
-            te.printStackTrace();
-            System.out.println("Failed to search tweets: " + te.getMessage());
-            System.exit(-1);
-       }
-	   */
+		for(int i = 0; i < args.length; i++){
+			Tweets = GetTwitterData(args[i]);
+			cleanTweets = TweetCleaner(Tweets);
+		 
 		
-		//TODO:: add Brayden's code here. Pass his array of sentences 
-		// tweets array is for testing -- replace it with the array of sentences Brayden collects 
-		String[] tweets = {"first tweet", "second tweet", "third tweet", "I am confused that single words are skipped!",
-        		"testing", "let's see what you can do", "testing out results", "starting the test", 
-        		"did it pass the test?", "not sure if this will work", "will it work?", "I sure hope it works",
-        		"Rain is missing?", "", "missing rain?", "rain is not missing as long as it is not alone", 
-        		"the rainforest is pretty", "I'm ready for vacation!", "where would you go on vacation?", "rain",
-        		"this skips single words!", "why are you skipping single words?", "fourth tweet", "fifth tweet",
-        		"does skip sentences words!", "more stuff about rain?", "sixth tweet", "tweet number seven"};
-		
-		//TODO:: figure out why single words are skipped and if that is a problem
-		//TODO:: Figure out why some sentences are not being clustered correctly
-        TwitterClustering sentenceClustering = new TwitterClustering(tweets);
+        TwitterClustering sentenceClustering = new TwitterClustering(cleanTweets);
         sentenceClustering.JsonFormat();
+		}
+	}
+	
+public static HashMap<String, Integer> GetTwitterData(String userIntput){
+	
+	//The HashMap we are storing  the Tweets in.
+	HashMap<String, Integer> Tweets = new HashMap<String, Integer>();
+	int MaxTweets = 700;
+	
+    Twitter twitter = new TwitterFactory().getInstance();
+    
+	    try {
+	    	//Makes a new Query object.
+	        Query query = new Query(userIntput);
+	        QueryResult result; 
+	       for(int i = 0; i <= MaxTweets; i++){
+	    	   	//loops threw and gets results from the twitter Query.
+	            result = twitter.search(query);
+	            List<Status> tweets = result.getTweets();
+	            for (Status tweet : tweets) {
+	            	
+	            	Integer freq = Tweets.get("@" + tweet.getUser().getScreenName() + " - " + tweet.getText()); 
+					
+					//Checks map for frequency
+					if (freq == null) { //Tweet doesn't exist
+						Tweets.put(tweet.getText(), 1);	
+					} else { //Tweet exists, increment count
+						Tweets.put(tweet.getText(), freq + 1);
+					}
+	            	
+	               System.out.println("@" + tweet.getUser().getScreenName() + " - " + tweet.getText());
+	            }
+	            if ((query = result.nextQuery()) != null){
+	            	break;
+	            }
+	            
+	        } 
+	        
+	    } catch (TwitterException te) {
+	        te.printStackTrace();
+	    }	
+	
+		return Tweets;
+	}
+
+
+public static String[]  TweetCleaner(HashMap<String, Integer> Tweets){
 		
-	}	
+		int size = 100;
+		int Count = 0;
+		String[] tweets = new String[size];
+		String Names = "(@[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*:)";
+		String URLS = "(https?|http?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+		String Clean = "[^\\w&&[^\\s]&&[^.,?]]";
+			
+		for (Map.Entry<String, Integer>HM:Tweets.entrySet()) {
+			
+			//Gets the Tweet from the collection
+			String result = HM.getKey();
+			result = result.replaceAll(URLS,""); //Removes URLS
+			result = result.replaceAll(Names,"");// Removes Twitter name in this formant "@somename:"
+			result = result.toLowerCase().replaceAll(Clean , " "); // Removes all other Unwanted Text.
+			System.out.println(result);
+			tweets[Count] = result; 	
+			
+			Count++;
+			
+			//Dynamically Reallocates array.
+			if(Count >= tweets.length){
+				tweets = Arrays.copyOf(tweets, tweets.length + size);
+			}
+		}	
+		return tweets;
+	}
 }
